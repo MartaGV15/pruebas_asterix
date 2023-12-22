@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Londrina+Solid&display=swap" rel="stylesheet">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+        *{margin: 0; padding: 0; box-sizing: border-box; font-family: 'Londrina Solid', sans-serif;}
+
+        body{
+            background-color: black;
+        }
+
+        img{
+            width: 100%;
+        }
+
+        p{
+            margin-top: 43px;
+        }
+
+        .container{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            gap: 20px;
+        }
+
+        .container__image{
+            position: relative;
+            width: 300px;
+            border: 3px solid yellow;
+        }
+
+        .dialog {
+            display: none;
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            height: 112px;
+            width: 226px;
+            background: white;
+            border-radius: 50%;
+            text-align: center;
+        }
+
+        .dialog:before {
+            border: 25px solid white;
+            content: '';
+            border-left-color: transparent;
+            border-bottom-color: transparent;
+            border-right-color: transparent;
+            position: absolute;
+            bottom: -40px;
+            right: 141px;
+            transform: rotate(18deg);
+        }
+
+        @keyframes bubbleAnimation {
+            0% {opacity: 0;}
+            100% {opacity: 1;}
+        }
+
+        .hipnosis__button{  
+            width: 100px;
+            height: 35px;
+            background-color: yellow;
+            border: 1px solid white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+    </style>
+
+    <div class="container">
+        <div class="container__image">
+            <img src="img/iris.jpg" alt="">
+            <div class="dialog">
+                <p>Por Osiris y por Apis, miradme bien</p> 
+            </div>
+        </div>
+        <button class="hipnosis__button">HIPNOSIS</button>
+    </div>
+
+    <script>
+        const btnHipnosis = document.querySelector('.hipnosis__button');
+
+        btnHipnosis.addEventListener('click', hipnose);
+
+        function hipnose() {
+        const dialogBubble = document.querySelector('.dialog');
+        dialogBubble.style.display = 'block';
+    }
+    </script>
+</body>
+</html>

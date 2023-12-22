@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+        * {padding: 0; margin:0; box-sizing: border-box;}
+
+        img{
+            width: 100%;
+        }
+
+        .game {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgb(169,166,253);
+            background: linear-gradient(90deg, rgba(169,166,253,1) 0%, rgba(242,107,73,1) 100%);;
+        }
+
+        .game__container {
+            display: grid;
+            grid-template-columns: 2fr 1fr 2fr;
+            height: 300px;
+            width: 100%;
+            gap: 90px;
+            max-width: 950px;
+            margin: 0 auto;
+        }
+
+        .game__fighter {
+            position: relative;
+            border-radius: 4px;
+            overflow: hidden;
+            border: 8px solid #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #2a2a2a;
+        }
+
+        .game__fighter-in {
+           
+            height: 400px;
+            width:100%;
+            display: contents;
+        }
+
+        .game__fighter-in img{
+            height:100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        .attack__indicator {
+            position: absolute;
+            left: 5%;
+            bottom: 5%;
+            font-size: 15px;
+            background-color: #2a2a2a;
+            color: white;
+            padding: 5px;
+        }
+
+        .button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .button button {
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            font-weight: 700;
+            padding: 10px 20px;
+            font-size: 15px;
+            border: 3px solid #000;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        .winner {
+            border: 10px solid rgb(31, 191, 31);
+        }
+
+        .winner::after {
+            content: "WINNER";
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            color: rgb(31, 191, 31);
+            position: absolute;
+            font-size: 3rem;
+        }
+
+        
+    </style>
+
+    <div class="game">
+        <div class="game__container">
+            <div class="game__fighter game__fighter-left">
+                <div class="game__fighter-in game__fighter-left-in"> 
+                    <img src="img/cilindrix.jpg" alt=""> 
+                </div>
+                <div class="attack__indicator" id="attack__cilindrix"></div>
+            </div>
+            <div class="button">
+                <button class="btn__fight">Fight!</button>
+            </div>
+            <div class="game__fighter game__fighter-right">
+                <div class="game__fighter-in game__fighter-right-in">
+                    <img src="img/asterix.jpg" alt="">
+                </div>
+                <div class="attack__indicator" id="attack__asterix"></div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const asterix = {
+            weapons: {
+                puño: "1",
+                pierna: "2",
+                bofetada: "3",
+                sentadilla: "4",
+                pocion: null
+            }
+        };
+
+        const cilindrix = {
+            weapons: {
+                llave: "1",
+                luxacion: "2",
+                bofetada: "3",
+                sentadilla: "4"
+            }
+        };
+
+        const btnFight = document.querySelector('.btn__fight');
+
+        let asterixPoints = 0;
+        let cilindrixPoints = 0;
+
+        btnFight.addEventListener('click', fight);
+
+        function fight() {
+            const asterixWeapon = getRandomWeapon(asterix);
+            const cilindrixWeapon = getRandomWeapon(cilindrix);
+
+            displayAttack('attack__asterix', asterixWeapon);
+            displayAttack('attack__cilindrix', cilindrixWeapon);
+
+            if (asterixWeapon.value > cilindrixWeapon.value) {
+                asterixPoints++;
+            } else if (cilindrixWeapon.value > asterixWeapon.value) {
+                cilindrixPoints++;
+            }
+
+            if (asterixPoints >= 5 || cilindrixPoints >= 5) {
+                endGame();
+            }
+        }
+
+        function getRandomWeapon(player) {
+            const weapons = Object.entries(player.weapons);
+            const randomIndex = Math.floor(Math.random() * weapons.length);
+            const [weapon, value] = weapons[randomIndex];
+            return { weapon, value };
+        }
+
+        function displayAttack(indicatorId, weapon) {
+            const attackIndicator = document.getElementById(indicatorId);
+            attackIndicator.innerText = `${weapon.weapon}: ${weapon.value}`;
+        }
+
+        function endGame() {
+            const asterixFighter = document.querySelector('.game__fighter-right');
+            const cilindrixFighter = document.querySelector('.game__fighter-left');
+
+            if (asterixPoints > cilindrixPoints) {
+                asterixFighter.classList.add('winner');
+            } else {
+                cilindrixFighter.classList.add('winner');
+            }
+
+            document.querySelector('.btn-fight').disabled = true;
+        }
+    </script>
+</body>
+</html>
